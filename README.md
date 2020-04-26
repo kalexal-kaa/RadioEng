@@ -1,5 +1,5 @@
 # Radio
-Radio with the ability to record stations
+Radio with the ability to record stations(English)
 
 ![][logo]
 
