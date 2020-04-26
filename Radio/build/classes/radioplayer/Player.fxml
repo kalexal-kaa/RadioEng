@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="535.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="radioplayer.PlayerController">
+   <ListView fx:id="stationsListView" focusTraversable="false" layoutX="14.0" layoutY="36.0" prefHeight="246.0" prefWidth="200.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="36.0" />
+   <Button fx:id="playButton" focusTraversable="false" layoutX="240.0" layoutY="177.0" mnemonicParsing="false" onAction="#playAction" prefHeight="103.0" prefWidth="130.0" text="PLAY" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="165.0">
+      <font>
+         <Font name="System Bold" size="22.0" />
+      </font></Button>
+   <Button fx:id="stopButton" focusTraversable="false" layoutX="391.0" layoutY="177.0" mnemonicParsing="false" onAction="#stopAction" prefHeight="103.0" prefWidth="130.0" text="STOP" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
+      <font>
+         <Font name="System Bold" size="22.0" />
+      </font></Button>
+   <Label fx:id="nameStation" layoutX="240.0" layoutY="46.0" prefHeight="113.0" prefWidth="279.0" wrapText="true" AnchorPane.bottomAnchor="141.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="36.0">
+      <font>
+         <Font name="System Bold Italic" size="24.0" />
+      </font></Label>
+   <MenuBar prefHeight="29.0" prefWidth="535.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+     <menus>
+       <Menu mnemonicParsing="false" text="Station">
+         <items>
+           <MenuItem mnemonicParsing="false" onAction="#addAction" text="Add" />
+           <MenuItem mnemonicParsing="false" onAction="#editAction" text="Edit" />
+           <MenuItem mnemonicParsing="false" onAction="#deleteAction" text="Delete" />
+         </items>
+       </Menu>
+       <Menu mnemonicParsing="false" text="Record">
+         <items>
+           <MenuItem fx:id="recordItem" mnemonicParsing="false" onAction="#recordAction" text="To begin" />
+           <MenuItem fx:id="stopRecordItem" mnemonicParsing="false" onAction="#stopRecordAction" text="Stop" />
+           <MenuItem mnemonicParsing="false" onAction="#directoryRecordAction" text="Records Directory" />
+         </items>
+       </Menu>
+       <Menu mnemonicParsing="false" text="Reference">
+         <items>
+           <MenuItem mnemonicParsing="false" onAction="#appInfoAction" text="About the program" />
+           <MenuItem mnemonicParsing="false" onAction="#exitAction" text="Exit" />
+         </items>
+       </Menu>
+     </menus>
+   </MenuBar>
+</AnchorPane>
