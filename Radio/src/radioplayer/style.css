@@ -1,0 +1,48 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28.12.2019, 15:02:23
+    Author     : alex
+*/
+.root{
+    -fx-background-color: grey;
+}
+.button{
+    -fx-background-radius: 40;
+    -fx-border-radius: 40;
+    -fx-text-fill: white;
+}
+.button:hover{
+    -fx-background-color: derive(-fx-base, 18%);
+    -fx-border-style: solid;
+    -fx-border-width: 1;
+    -fx-border-color: derive(-fx-base, -15%);
+    -fx-cursor: hand;
+}
+.button:pressed{
+    -fx-text-fill: black;
+}
+.list-view, .list-view .viewport, .list-view .content{
+    -fx-background-color: gainsboro;
+}
+.list-view:hover{
+    -fx-cursor: hand;
+}
+.toast{
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+    -fx-background-color: black;
+    -fx-padding: 20;
+}
+#nameStation{
+    -fx-text-fill: white;
+}
+#playButton{
+    -fx-background-color: blue;
+}
+#stopButton{
+    -fx-background-color: red;
+}

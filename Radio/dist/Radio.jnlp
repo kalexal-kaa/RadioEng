@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Radio.jnlp">
+  <information>
+    <title>Radio</title>
+    <vendor>alex</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" java-vm-args="-splash:src/images/splash.png "  href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="Radio.jar" size="298566" download="eager" />
+    <jar href="lib/jl1.0.1.jar" size="105363" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Radio" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="radioplayer.Splash"  name="Radio" />
+  <update check="always"/>
+</jnlp>
