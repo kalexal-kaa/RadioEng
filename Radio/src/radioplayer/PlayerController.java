@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 
 import java.io.*;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -387,9 +386,10 @@ public class PlayerController implements Initializable {
         if (!file.exists()) {
             file.mkdir();
             if(file.exists()){
-                alertWindow("The <Stations> directory has been created.\nYour radio stations will be here:\n"+fPath);
+                alertWindow("The <RadioStations> directory has been created.\nYour radio stations will be here:\n"+fPath);
+                createDefaultStations();
             }else{
-                alertWindow("Error!\nThe <Stations> directory will not be created.\n" +
+                alertWindow("Error!\nThe <RadioStations> directory will not be created.\n" +
                         "Try creating the specified directory manually in the following path:\n"+fPath+"\nThe program will be closed.");
                 System.exit(0);
             }
@@ -405,6 +405,13 @@ public class PlayerController implements Initializable {
             stations[i]=f[i].getName();
         }
         stationsListView.setItems(FXCollections.observableArrayList(stations).sorted());
+    }
+    private void createDefaultStations(){
+         String[] stationNames = {"NonStopPlay","Classical Music","Fip Radio","Jazz Legends","Joy Radio","Live-icy","Music Radio","Radio Electron","Dubstep","Trancemission"};
+         String[] stationUrls = {"http://stream.nonstopplay.co.uk/nsp-128k-mp3","http://stream.srg-ssr.ch/m/rsc_de/mp3_128","http://direct.fipradio.fr/live/fip-midfi.mp3","http://jazz128legends.streamr.ru/","http://airtime.joyradio.cc:8000/airtime_192.mp3","http://live-icy.gss.dr.dk:8000/A/A05H.mp3","http://ice-the.musicradio.com/CapitalXTRANationalMP3","http://radio-electron.ru:8000/128","http://air.radiorecord.ru:8102/dub_320","http://air.radiorecord.ru:8102/tm_320"};
+         for(int i=0;i<10;i++){
+             writer(path+separator+stationNames[i], stationUrls[i]);
+         }
     }
     private void alertWindow(final String s) {
         final Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -460,22 +467,17 @@ public class PlayerController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        try {
-            parentPath= URLDecoder.decode(new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getParent(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.getMessage();
-        }
-        path=parentPath+separator+"Stations";
+        parentPath = System.getProperty("user.home");
+        path=parentPath+separator+"RadioStations";
         this.dirCreator(this.path);
         File f=new File(path);
         if(permissionRead(f)||permissionWrite(f)){
             if(permissionRead(f)&&permissionWrite(f)){
-                alertWindow("Failed to get permission to read and write files to the <Stations> directory.\nTry to give permission manually.");
+                alertWindow("Failed to get permission to read and write files to the <RadioStations> directory.\nTry to give permission manually.");
             }else if(permissionRead(f)){
-                alertWindow("Failed to get permission to read files in directory <Stations>.\nTry to give permission manually.");
+                alertWindow("Failed to get permission to read files in directory <RadioStations>.\nTry to give permission manually.");
             }else{
-                alertWindow("Failed to get permission to write files to <Stations> directory.\nTry to give permission manually.");
+                alertWindow("Failed to get permission to write files to <RadioStations> directory.\nTry to give permission manually.");
             }
             System.exit(0);
         }
@@ -483,6 +485,5 @@ public class PlayerController implements Initializable {
         stopButton.setDisable(true);
         recordItem.setDisable(true);
         stopRecordItem.setDisable(true);
-    }    
-    
+    }   
 }
