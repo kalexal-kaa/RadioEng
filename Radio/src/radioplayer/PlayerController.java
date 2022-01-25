@@ -12,7 +12,9 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -55,6 +57,10 @@ public class PlayerController implements Initializable {
             return;
         }
         
+        if(!checkInternetConnection()){
+            toast.setMessage("No connection");
+        } 
+
         String urlString = reader(path+separator+l);
 
         taskPlayer = new Task() {
@@ -386,10 +392,10 @@ public class PlayerController implements Initializable {
         if (!file.exists()) {
             file.mkdir();
             if(file.exists()){
-                alertWindow("The <RadioStations> directory has been created.\nYour radio stations will be here:\n"+fPath);
+                alertWindow("The <Stations> directory has been created.\nYour radio stations will be here:\n"+fPath);
                 createDefaultStations();
             }else{
-                alertWindow("Error!\nThe <RadioStations> directory will not be created.\n" +
+                alertWindow("Error!\nThe <Stations> directory will not be created.\n" +
                         "Try creating the specified directory manually in the following path:\n"+fPath+"\nThe program will be closed.");
                 System.exit(0);
             }
@@ -423,6 +429,26 @@ public class PlayerController implements Initializable {
         ButtonType buttonType = new ButtonType("Close", ButtonBar.ButtonData.OK_DONE);
         alert.getButtonTypes().setAll(buttonType);
         alert.showAndWait();
+    }
+    private static boolean checkInternetConnection() {
+        Boolean result = false;
+        HttpURLConnection con = null;
+        try {
+            con = (HttpURLConnection) new URL("https://google.com").openConnection();
+            con.setRequestMethod("HEAD");
+            result = (con.getResponseCode() == HttpURLConnection.HTTP_OK);
+        } catch (IOException e) {
+              e.getMessage();
+        } finally {
+            if (con != null) {
+                try {
+                    con.disconnect();
+                } catch (Exception e) {
+                      e.getMessage();
+                }
+            }
+        }
+        return result;
     }
     private boolean permissionRead(File file){
         if(!file.canRead()){
@@ -467,17 +493,22 @@ public class PlayerController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        parentPath = System.getProperty("user.home");
-        path=parentPath+separator+"RadioStations";
+        
+        try {
+            parentPath= URLDecoder.decode(new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getParent(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.getMessage();
+        }
+        path=parentPath+separator+"Stations";
         this.dirCreator(this.path);
         File f=new File(path);
         if(permissionRead(f)||permissionWrite(f)){
             if(permissionRead(f)&&permissionWrite(f)){
-                alertWindow("Failed to get permission to read and write files to the <RadioStations> directory.\nTry to give permission manually.");
+                alertWindow("Failed to get permission to read and write files to the <Stations> directory.\nTry to give permission manually.");
             }else if(permissionRead(f)){
-                alertWindow("Failed to get permission to read files in directory <RadioStations>.\nTry to give permission manually.");
+                alertWindow("Failed to get permission to read files in directory <Stations>.\nTry to give permission manually.");
             }else{
-                alertWindow("Failed to get permission to write files to <RadioStations> directory.\nTry to give permission manually.");
+                alertWindow("Failed to get permission to write files to <Stations> directory.\nTry to give permission manually.");
             }
             System.exit(0);
         }
@@ -485,5 +516,6 @@ public class PlayerController implements Initializable {
         stopButton.setDisable(true);
         recordItem.setDisable(true);
         stopRecordItem.setDisable(true);
-    }   
+    }    
+    
 }
